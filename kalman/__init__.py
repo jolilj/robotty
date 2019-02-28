@@ -8,8 +8,8 @@ def predict(x,P,A,Q):
 def update(x,z,P,H,R):
     I = np.matrix(np.eye(x.ndim))
     i = z - H*x
-    Pi = H*P*H.T
+    Pi = H*P*H.T+R
     K = P*H.T*np.linalg.inv(Pi)
     xp = x+K*i
     Pp = (I-K*H)*P*(I-K*H).T + K*R*K.T
-    return xp,Pp,i,Pi
+    return xp,Pp,i,Pi,K
