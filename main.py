@@ -1,8 +1,12 @@
-from robotty.wheel_encoder import WheelEncoder
+from robotty.wheel_encoder_push import WheelEncoder
+import time
 
 def main():
-    we = WheelEncoder(1)
-    we.start()
+    def cb(omega):
+        print(omega)
+
+    we = WheelEncoder(cb)
+    time.sleep(1000)
 
 if __name__ == "__main__":
     main()
