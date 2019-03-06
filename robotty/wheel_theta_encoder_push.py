@@ -2,7 +2,7 @@ import time
 import math
 import RPi.GPIO as GPIO
 
-TICKS_PER_ROT = 20
+TICKS_PER_ROT = 40
 
 class WheelEncoder(object):
     def __init__(self, theta0, theta_cb):
@@ -12,7 +12,7 @@ class WheelEncoder(object):
 
         self.theta = theta0
         self.theta_cb = theta_cb
-        GPIO.add_event_detect(17, GPIO.FALLING, callback=self.tick, bouncetime=10)
+        GPIO.add_event_detect(17, GPIO.FALLING, callback=self.tick, bouncetime=100)
 
     def tick(self, pin):
         self.theta = self.theta + (2 * math.pi / TICKS_PER_ROT)

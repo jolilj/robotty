@@ -4,10 +4,11 @@ import numpy as np
 from threading import Lock
 import kalman
 
-h = 0.01  # based on at most 0.5 m/s with 20 ticks per rotation on the wheels :)
+h = 0.01  # based on at most 0.5 m/s with 20 ticks per rotation on the wheels :) NOTE: 20 was WRONG!!!
 alpha = 0
 x = np.matrix('0;0')
-P = 1 * np.eye(x.ndim)
+P = np.matrix('0.001 0; 0 1')
+
 A = np.matrix([[1, h], [0, alpha]])
 Q = np.matrix([[0.0001, 0.0001], [0.0001, 1]])
 H = np.matrix([1, 0])
@@ -19,10 +20,11 @@ def main():
     def cb(theta):
         global x, P, i, Pi, K
         state_lock.acquire()
-        R = 0.01
-        x, P, i, Pi, K = kalman.update(x, omega, P, H, R)
+        R = 0.001
+        x, P, i, Pi, K = kalman.update(x, theta, P, H, R)
         state_lock.release()
         # print("%.2f, %.2f, %.2f".format(i, Pi, K))
+        print("-> %.2f" % theta)
 
     we = WheelEncoder(x[0, 0], cb)
 
