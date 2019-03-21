@@ -9,7 +9,10 @@ def update(x,z,P,H,R):
     I = np.matrix(np.eye(x.ndim))
     i = z - H.dot(x)
     Pi = H.dot(P.dot(H.T))+R
-    K = P.dot(H.T)/Pi # assume scalar
+    if Pi.ndim == 0:
+        K = P.dot(H.T)/Pi
+    else:
+        K = P.dot(H.T).dot(np.linalg.inv(Pi))
     xp = x+K.dot(i)
-    Pp = (I-K.dot(H)).dot(P.dot((I-K.dot(H.T)))) + (K*R).dot(K.T)
+    Pp = (I-K.dot(H)).dot(P)
     return xp,Pp,i,Pi,K
