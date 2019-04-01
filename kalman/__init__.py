@@ -1,12 +1,12 @@
 import numpy as np
 
 def predict(x,P,A,Q):
-    xp = A.dot(x)
+    xp = A.d # TODO: the real shit
     Pp = A.dot(P.dot(A.T)) + Q
     return xp, Pp
 
 def update(x,z,P,H,R):
-    I = np.matrix(np.eye(x.ndim))
+    I = np.matrix(np.eye(*x.shape))
     i = z - H.dot(x)
     Pi = H.dot(P.dot(H.T))+R
     if Pi.ndim == 0:
