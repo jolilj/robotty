@@ -23,7 +23,8 @@ def main():
         x[:,0], P, i, Pi, K = kalman.update(x[:,0], theta, P, H_left, R)
         state_lock.release()
         # print("%.2f, %.2f, %.2f".format(i, Pi, K))
-        print("-> %.2f" % theta)
+        print("-> %.2f" % dt)
+        print("---------------")
 
 
     def cb_right(dt, theta):
@@ -35,7 +36,7 @@ def main():
         state_lock.release()
         # print("%.2f, %.2f, %.2f".format(i, Pi, K))
         print("-> %.2f" % dt)
-        print("---------------"
+        print("---------------")
 
 
     we_left = WheelEncoder(cb_left, 17)
