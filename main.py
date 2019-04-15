@@ -10,9 +10,6 @@ h = 0.01  # based on at most 0.5 m/s with 20 ticks per rotation on the wheels :)
 x = np.zeros((5,1))
 P = np.eye(5)
 
-Q = np.array([[0.0001, 0.0001], [0.0001, 1]])
-H = np.array([1, 0])
-
 def main():
     global x, P
     state_lock = Lock()

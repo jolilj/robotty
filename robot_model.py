@@ -5,6 +5,7 @@ R = 0.001
 r_R = 0.035
 r_L = 0.035
 L = 0.1  #Axis length
+wheel_speed_noise_std_per_sec = 0.1 #m per sec
 
 def get_prediction_model(x,h):
 
@@ -38,3 +39,9 @@ def get_left_wheel_model(dt):
 def get_right_wheel_model(dt):
     H_right = np.array([[0],[0],[0],[0],[dt/r_R]]).T
     return H_right
+
+def get_process_noise_model(h):
+    Q = np.zeros((5,5))
+    Q[3,3] = wheel_speed_noise_std_per_sec*wheel_speed_noise_std_per_sec*h
+    Q[4,4] = wheel_speed_noise_std_per_sec*wheel_speed_noise_std_per_sec*h
+    return Q
