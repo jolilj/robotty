@@ -23,7 +23,7 @@ class WheelEncoder(object):
         # self.theta = self.theta + (2 * math.pi / TICKS_PER_ROT)
         self.theta_cb(dt, (2 * math.pi / TICKS_PER_ROT))
 
-    def is_still():
+    def is_still(self):
         now = time.time()
         if (now - self.last_t > IS_STILL_TIME):
             return True
