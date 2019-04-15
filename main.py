@@ -3,13 +3,23 @@ import time
 import numpy as np
 from threading import Lock
 import kalman
-from robot_model import get_prediction_model, L, r_L, r_R, R, get_left_wheel_model, get_right_wheel_model, get_process_noise_model
+from robot_model import (get_prediction_model,
+                         L,
+                         r_L,
+                         r_R,
+                         R,
+                         R_still,
+                         get_left_wheel_model,
+                         get_right_wheel_model,
+                         get_process_noise_model)
 
 
 h = 0.01  # based on at most 0.5 m/s with 20 ticks per rotation on the wheels :) NOTE: 20 was WRONG!!!
 x = np.zeros((5,1))
 P = np.eye(5)
 Q = get_process_noise_model(h)
+H_left_still = np.array([[0],[0],[0],[1.0],[0.0]]).T
+H_right_still = np.array([[0],[0],[0],[0],[1.0]]).T
 
 def main():
     global x, P
@@ -50,12 +60,10 @@ def main():
 
         # Zero velocity updates
         if we_left.is_still():
-            H_left = np.array([[0],[0],[0],[0],[1.0]]).T
-            x[:,0], P, inno, Pi, K = kalman.update(x[:,0], 0.0, P, H_left, R)
+            x[:,0], P, inno, Pi, K = kalman.update(x[:,0], 0.0, P, H_left_still, R_still)
 
         if we_right.is_still():
-           H_right = np.array([[0],[0],[0],[0],[1.0]]).T
-           x[:,0], P, inno, Pi, K = kalman.update(x[:,0], 0.0, P, H_right, R)
+           x[:,0], P, inno, Pi, K = kalman.update(x[:,0], 0.0, P, H_right_still, R_still)
 
         x[:,0], A = get_prediction_model(x[:,0],h)
         _, P = kalman.predict(x, P, A, Q)

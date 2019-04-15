@@ -2,6 +2,7 @@ import numpy as np
 
 
 R = 0.001
+R_still = 0.00001
 r_R = 0.035
 r_L = 0.035
 L = 0.1  #Axis length
