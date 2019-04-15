@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import random
 import kalman
-from robot_model import get_prediction_model, L, r_L, r_R, R, get_left_wheel_model, get_right_wheel_model, get_noise_process_model, wheel_speed_noise_std_per_sec
+from robot_model import get_prediction_model, L, r_L, r_R, R, get_left_wheel_model, get_right_wheel_model, get_process_noise_model, wheel_speed_noise_std_per_sec
 
 #Robot params
 TICKS_PER_WHEEL = 40
@@ -56,7 +56,7 @@ P_est = np.zeros((5,5,len(T)))
 P_est[:,:,0] = np.eye(5)
 
 K_print = np.zeros((5,1,len(T)))
-Q = get_noise_process_model(h)
+Q = get_process_noise_model(h)
 
 # Simulation
 for i in range(1,len(T)):

@@ -47,7 +47,7 @@ def main():
         state_lock.acquire()
         #if wheel_left.is_still()
         #    kalman.update()
-        x,A = get_prediction_model(x,h)
+        x[:,0], A = get_prediction_model(x[:,0],h)
         _, P = kalman.predict(x, P, A, Q)
         state_lock.release()
 
