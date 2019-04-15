@@ -34,7 +34,8 @@ def main():
         x[:,0], P, i, Pi, K = kalman.update(x[:,0], theta, P, H_right, R)
         state_lock.release()
         # print("%.2f, %.2f, %.2f".format(i, Pi, K))
-        print("-> %.2f" % theta)
+        print("-> %.2f" % dt)
+        print("---------------"
 
 
     we_left = WheelEncoder(cb_left, 17)
@@ -45,8 +46,16 @@ def main():
         tic = time.time()
 
         state_lock.acquire()
-        #if wheel_left.is_still()
-        #    kalman.update()
+
+        # Zero velocity updates
+        if we_left.is_still():
+            H_left = np.array([[0],[0],[0],[0],[1.0]]).T
+            x[:,0], P, i, Pi, K = kalman.update(x[:,0], 0.0, P, H_right, R)
+
+        if we_right.is_still():
+           H_right = np.array([[0],[0],[0],[0],[1.0]]).T
+           x[:,0], P, i, Pi, K = kalman.update(x[:,0], 0.0, P, H_right, R)
+
         x[:,0], A = get_prediction_model(x[:,0],h)
         _, P = kalman.predict(x, P, A, Q)
         state_lock.release()
