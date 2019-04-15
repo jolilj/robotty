@@ -20,7 +20,7 @@ def main():
         H_left = get_left_wheel_model(dt)
 
         state_lock.acquire()
-        x, P, i, Pi, K = kalman.update(x, theta, P, H_left, R)
+        x[:,0], P, i, Pi, K = kalman.update(x[:,0], theta, P, H_left, R)
         state_lock.release()
         # print("%.2f, %.2f, %.2f".format(i, Pi, K))
         print("-> %.2f" % theta)
@@ -31,7 +31,7 @@ def main():
         H_right = get_right_wheel_model(dt)
 
         state_lock.acquire()
-        x, P, i, Pi, K = kalman.update(x, theta, P, H_right, R)
+        x[:,0], P, i, Pi, K = kalman.update(x[:,0], theta, P, H_right, R)
         state_lock.release()
         # print("%.2f, %.2f, %.2f".format(i, Pi, K))
         print("-> %.2f" % theta)
