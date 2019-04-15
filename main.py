@@ -3,12 +3,13 @@ import time
 import numpy as np
 from threading import Lock
 import kalman
-from robot_model import get_prediction_model, L, r_L, r_R, R, get_left_wheel_model, get_right_wheel_model
+from robot_model import get_prediction_model, L, r_L, r_R, R, get_left_wheel_model, get_right_wheel_model, get_process_noise_model
 
 
 h = 0.01  # based on at most 0.5 m/s with 20 ticks per rotation on the wheels :) NOTE: 20 was WRONG!!!
 x = np.zeros((5,1))
 P = np.eye(5)
+Q = get_process_noise_model(h)
 
 def main():
     global x, P
