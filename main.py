@@ -51,7 +51,7 @@ def main():
         # Zero velocity updates
         if we_left.is_still():
             H_left = np.array([[0],[0],[0],[0],[1.0]]).T
-            x[:,0], P, i, Pi, K = kalman.update(x[:,0], 0.0, P, H_right, R)
+            x[:,0], P, i, Pi, K = kalman.update(x[:,0], 0.0, P, H_left, R)
 
         if we_right.is_still():
            H_right = np.array([[0],[0],[0],[0],[1.0]]).T
