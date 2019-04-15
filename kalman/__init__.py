@@ -1,7 +1,7 @@
 import numpy as np
 
 def predict(x,P,A,Q):
-    xp = A.d # TODO: the real shit
+    xp = A.dot(x)
     Pp = A.dot(P.dot(A.T)) + Q
     return xp, Pp
 
